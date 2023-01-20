@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cars</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    nav {
+      display: flex;
+      justify-content: space-around;
+      background-color: lightgrey;
+      padding: 1rem 0;
+    }
+    nav a {
+      text-decoration: none;
+    }
+    #container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3rem;
+    }
+    #form {
+      width: 30%;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 5%;
+      border: 1px solid whilte;
+      background-color: wheat;
+      padding: 3rem 0;
+      border-radius: 2rem;
+    }
+    #form input,
+    select {
+      min-width: 200px;
+      height: 30px;
+    }
+    #modal {
+      position: absolute;
+      top: 0;
+      background: rgba(0, 0, 0, 0.604);
+      height: 100vh;
+      width: 100%;
+      display: none;
+    }
+    .btns{
+        width: 50px;
+        font-size: 20px;
+        margin: 10px 1rem;
+    }
+    @media only screen and (max-width: 900px){
+        #container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 3rem;
+    }
+}
+    @media only screen and (max-width: 600px){
+        #container {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 3rem;
+    }
+}
+  </style>
+  <body>
+    <nav>
+      <div><a href="index.html">AdCars</a></div>
+      <div><a href="cars.html">cars</a></div>
+      <div><a href="wishlist.html">wishlist</a></div>
+    </nav>
+
+    <div id="filters">
+      <select id="fbrand">
+        <option value="">filter By Brand</option>
+
+        <option value="tata">Tata</option>
+        <option value="suzuki">suzuki</option>
+        <option value="bulero">bulero</option>
+      </select>
+      <select id="fprice">
+        <option value="">Sort by price</option>
+        <option value="asc">Low To High</option>
+        <option value="desc">High to Low</option>
+      </select>
+      <select id="fkms">
+        <option value="">Sort By kms</option>
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+      </select>
+    </div>
+    <div id="container"></div>
+
+    <div id="modal">
+      <form id="form">
+        <select id="brand">
+          <option value="tata">Tata</option>
+          <option value="suzuki">suzuki</option>
+          <option value="bulero">bulero</option>
+        </select>
+
+        <select id="type">
+          <option value="manual">manual</option>
+          <option value="auto">automated</option>
+        </select>
+        <select id="year">
+          <option value="2015">2015</option>
+          <option value="2016">2016</option>
+          <option value="2017">2017</option>
+          <option value="2018">2018</option>
+          <option value="2019">2019</option>
+          <option value="2020">2020</option>
+        </select>
+        <input type="number" placeholder="kms" id="kms" />
+        <input type="text" placeholder="description" id="desc" />
+        <input type="number" placeholder="price" id="price" />
+        <input type="submit" id="submit" />
+      </form>
+    </div>
+  </body>
+</html>
+<script>
+  let container = document.getElementById("container");
+  let modal = document.getElementById("modal");
+  let form = document.getElementById("form");
+  let fbrand = document.getElementById("fbrand");
+  fbrand.addEventListener("click", FilterBrand);
+  let fprice = document.getElementById("fprice");
+  fprice.addEventListener("click", FilterPrice);
+  let fkms = document.getElementById("fkms");
+  fkms.addEventListener("click", FilterKms);
+
+  let filter = "",
+    sort = "",
+    order = "asc",
+    title = "";
+
+  function getcars({ filter, sort, order }) {
+    fetch(
+      `https://json-data-2yj8.onrender.com/cars?${title}=${filter}&_sort=${sort}&_order=${order}`
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        displaydata(res);
+      });
+  }
+  getcars({ filter, sort, order, title });
+
+  function displaydata(data) {
+    container.innerHTML = null;
+    data.forEach((e) => {
+      let img = document.createElement("img");
+      img.src = e.img;
+      let brand = document.createElement("h4");
+      brand.textContent = "Brand : "+e.brand;
+      let year = document.createElement("h4");
+      year.textContent ="Year : "+ e.year;
+    
+       let span = document.createElement("div");
+       span.style.display="flex";
+       span.style.gap="1rem";
+       span.append(year,brand)
+
+
+      let type = document.createElement("h4");
+      type.textContent = "Type : "+ e.type;
+      let kms = document.createElement("h4");
+      kms.textContent ="Kms : "+ e.kms;
+      let desc = document.createElement("h4");
+      desc.textContent ="Description : "+  e.desc;
+      let price = document.createElement("h4");
+      price.textContent ="Price : " + e.price;
+
+      let edit = document.createElement("button");
+      edit.textContent = "📝";
+      edit.setAttribute("class","btns")
+      edit.addEventListener("click", () => {
+        modal.style.display = "block";
+        editCar(e.id);
+      });
+
+      let del = document.createElement("button");
+      del.setAttribute("class","btns")
+      del.addEventListener("click", () => {
+        delCar(e.id);
+      });
+      del.textContent = "✄";
+
+      let wish = document.createElement("button");
+      wish.setAttribute("class","btns")
+      wish.addEventListener("click", () => {
+        AddTowishlist(e);
+        wish.textContent = "💓";
+      });
+      wish.textContent = "♡";
+
+      let div = document.createElement("div");
+      div.append(img,span, kms, type, desc, price, wish, edit, del);
+
+      container.append(div);
+    });
+  }
+
+  function delCar(id) {
+    fetch(`https://json-data-2yj8.onrender.com/cars/${id}`, {
+      method: "DELETE",
+    }).then((res) => {
+      getcars({ filter, sort, order, title });
+      //    alert("removed")
+    });
+  }
+  function AddTowishlist(data) {
+    delete data.id;
+    fetch(`https://json-data-2yj8.onrender.com/wishlist`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then((res) => {
+      alert("added to wishlist");
+    });
+  }
+
+  function editCar(id) {
+    form.addEventListener("submit", addcar);
+
+    function addcar() {
+      event.preventDefault();
+      let obj = {
+        brand: form.brand.value,
+        type: form.type.value,
+        year: form.year.value,
+        kms: form.kms.value,
+        desc: form.desc.value,
+        price: form.price.value,
+      };
+      // console.log(obj);
+      AddCars(id, obj);
+    }
+
+    function AddCars(id, car) {
+      fetch(`https://json-data-2yj8.onrender.com/cars/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(car),
+      }).then((res) => {
+        alert("data is updated");
+        getcars({ filter, sort, order, title });
+      });
+      modal.style.display = "none";
+    }
+  }
+
+  async function FilterBrand() {
+    let val = event.target.value;
+    title = "brand";
+    filter = val;
+    let data = getcars({ filter, sort, order, title });
+  }
+  async function FilterPrice() {
+    let val = event.target.value;
+    sort = "price";
+    order = val;
+    let data = getcars({ filter, sort, order, title });
+  }
+  function FilterKms() {
+    let val = event.target.value;
+    sort = "price";
+    order = val;
+    let data = getcars({ filter, sort, order, title });
+  }
+</script>

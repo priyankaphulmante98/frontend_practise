@@ -1,0 +1,144 @@
+#container{
+    display: grid;
+     grid-template-columns: repeat(4, 1fr);
+     grid-template-rows: auto;
+     /* border: 2px solid black; */
+     text-align: center;
+     row-gap: 20px;
+     column-gap: 20px;
+    padding: 20px;
+}
+#container div{
+    /* background-color: orange; */
+    border:2px solid black;
+    padding:20px
+
+}
+/* #container div img{
+    height:200px;
+    width:200px
+} */
+body {
+font-family: "Poppins", sans-serif;
+/* background-color: rgba(0, 0, 0, 0.849); */
+background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRy6PzQV15xucoQ3vdnhJGvRXscnqEDxXI44w&usqp=CAU");
+background-size: cover;
+background-attachment: fixed;
+}
+#navbar {
+display: flex;
+margin-top: 0px;
+justify-content: space-around;
+background-color: orange;
+font-weight: bold;
+font-size: 20px;
+padding: 5px 5px 8px 5px;
+text-decoration: none;
+height: 50px;
+}
+#navbar a:hover {
+color: white;
+text-decoration: none;
+}
+#navbar h3 a {
+text-decoration: none;
+color: rgb(54, 184, 54);
+}
+h3 {
+text-decoration: none;
+text-align: center;
+font-weight: 0px;
+margin: 15 15 15 15;
+color: black;
+}
+p {
+color: black;
+}
+
+label {
+color: black;
+font-size: 23px;
+}
+input[type="text"] {
+width: 60%;
+padding: 12px;
+border: 1px solid #ccc;
+border-radius: 2px;
+border-radius: 10px;
+margin-top: 10px;
+margin-bottom: 16px;
+font-size: 20px;
+box-shadow: rgb(39, 203, 39) 0px 8px  24px;
+}
+
+#searchbtn {
+background-color: rgb(56, 203, 56);
+color: white;
+padding: 8px 8px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+width: 150px;
+font-size: 23px;
+margin-left: 50px;
+margin-top: 10px;
+box-shadow: rgb(17, 19, 16) 0px 8px  24px;
+
+}
+#searchbtn:hover{
+background-color:orange;
+color:rgb(0, 0, 0);
+box-shadow: rgb(13, 13, 12);
+}
+.modal {
+position: fixed;
+top: 0;
+border: 1px solid red;
+width: 100%;
+height: 100vh;
+background-color: rgba(206, 208, 210, 0.819);
+display: flex;
+justify-content: center;
+align-items: center;
+display: none;
+
+}
+.modal .popup {
+width: 50%;
+margin: auto;
+position: relative;
+border: 2px solid white;
+background: white;
+padding: 1rem;
+border-radius: 10px;
+width: 400px;
+text-align: center;
+margin-top: 5%;
+}
+.popup .close {
+position: absolute;
+right: 10px;
+top: -0px;
+
+color: white;
+background-color: red;
+cursor: pointer;
+font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+#teamDetails {
+background-color: rgb(56, 203, 56);
+color: white;
+padding: 5px 5px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+font-size: 14px;
+box-shadow: rgb(7, 8, 6) 0px 8px  24px;
+
+}
+#teamdetails:hover{
+background-color:orange;
+color:black;
+box-shadow: rgb(244, 182, 66);
+}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       
+        #container{
+            width: 100%;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            grid-template-rows: auto;
+            row-gap: 2rem;
+            border:2px solid black;
+        }
+    
+        #container div{
+            width:250px;
+            row-gap: 10px;
+            height: auto;
+            text-align: center;
+            border:2px solid black
+        }
+        #container div img{
+          
+            width:100%;
+        }
+        </style>
+</head>
+<body>
+    <div id="container">
+            
+    </div>
+</body>
+</html>
+<script>
+      async function getData(id){
+        let res = await fetch("http://localhost:3000/users");
+        let data = await res.json();
+        displayData(data);
+        console.log(data, "data fetched");
+        return data
+        
+    }
+
+    getData();
+
+
+
+    function displayData(data){
+
+
+        let container = document.getElementById("container")
+        console.log(data)
+       
+        data.forEach((e)=> {
+            // console.log(e.name)
+        let div= document.createElement("div");
+            
+        let name = document.createElement("h3");
+        name.textContent=e.name
+
+        let quantity = document.createElement("p");
+        quantity.textContent=e.quantity;
+
+        let description = document.createElement("p");
+        description.textContent=e.description;
+
+        let image = document.createElement("img");
+        image.setAttribute("src", e.image)
+
+        let rating = document.createElement("p");
+        rating.textContent=e.rating;
+
+        let price = document.createElement("p");
+        price.textContent=e.price;
+        
+
+        div.addEventListener("click",()=>{
+            movefunction(e.id)
+        })
+        div.append(image, name, quantity, description, rating, price)
+        container.append(div);
+
+
+        })
+
+
+    }
+
+    function movefunction(id){
+
+        localStorage.setItem("id", JSON.stringify(id)) 
+        // console.log(id);
+        window.location.href = "single.html"
+    }
+
+
+   
+
+   
+    
+
+</script>

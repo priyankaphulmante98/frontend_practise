@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   
+</head>
+<body>
+    
+    <h1>user dummy form</h1>
+    <form id="form">
+        
+        <input type="text" id="name" placeholder="name" />
+        <input type="number" id="quantity" placeholder="quantity" />
+        <input type="text" id="description" placeholder="description" />
+        <input type="url" id="image" placeholder="image" />
+        <select id="rating">
+            <option value="">Rating</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+        <input type="number" id="price" placeholder="price"/>
+        <button type="submit" id="button">Submit</button>
+    
+    </form>
+   
+</body>
+</html>
+<script>
+
+    let form = document.getElementById("form");
+    form.addEventListener("submit", submitfunction);
+
+    function submitfunction(e){
+        e.preventDefault()
+
+        let obj = {
+            name:form.name.value,
+            quantity:form.quantity.value,
+            description:form.description.value,
+            image:form.image.value,
+            rating:form.rating.value,
+            price:form.price.value,
+            button:form.button.value
+        }
+        console.log(obj)
+        alert("user data addded sucessfully")
+         postData(obj) 
+    }
+
+  async function postData(udata){
+    let res = await fetch("http://localhost:3000/users",{
+        method:"POST",
+        body:JSON.stringify(udata),
+        headers:{
+            "Content-Type":"application/json",
+        },
+    });
+    let data = await res.json();
+    console.log(data, "userdata");
+    }
+
+    let button = document.getElementById("button")
+    button.addEventListener("click", function(){
+        console.log("hi");
+        window.location.href="user.html"
+    })
+
+   
+
+
+  
+    
+
+
+
+
+</script>

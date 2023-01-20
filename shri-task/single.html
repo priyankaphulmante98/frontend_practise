@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         #container{
+            width: 100%;
+            margin: auto;
+            border:2px solid red;
+        }
+    
+        #container div{
+            width:250px;
+            height: auto;
+            text-align: center;
+            border:2px solid black;
+        }
+        #container div img{
+            width:100%;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="container">
+    <!-- <h1>hello hi </h1> -->
+
+    </div>
+</body>
+</html>
+<script>
+async function getData(){
+    let id=JSON.parse(localStorage.getItem("id"))
+        let res = await fetch(`http://localhost:3000/users/${id}`)
+        let data = await res.json();
+        displayData(data);
+        console.log(data, "single data");
+       
+      
+    }
+    getData();
+
+    
+
+    // console.log(obj)
+let container= document.getElementById("container")
+
+function displayData(e){
+       
+            console.log(e.name)
+        let div= document.createElement("div");
+            
+        let name = document.createElement("h3");
+        name.textContent=e.name
+
+        let quantity = document.createElement("p");
+        quantity.textContent=e.quantity;
+
+        let description = document.createElement("p");
+        description.textContent=e.description;
+
+        let image = document.createElement("img");
+        image.setAttribute("src", e.image)
+
+        let rating = document.createElement("p");
+        rating.textContent=e.rating;
+
+        let price = document.createElement("p");
+        price.textContent=e.price;
+
+        let del = document.createElement("button")
+        // del.addEventListener("click",handledelete)
+        del.innerHTML="DELETE"
+
+        let btn=document.createElement("button")
+        btn.textContent="Add To Cart"
+         btn.addEventListener("click",function(){
+         addToCart(e,i)
+      })
+
+        
+        div.append(image, name, quantity, description, rating, price, btn, del);
+        container.append(div);
+
+    }
+    
+
+
+
+//    async function handeldelete(id) {
+//     await fetch(`"http://localhost:3000/users/${id}`,{ method: "DELETE" });
+//   }
+</script>
+
