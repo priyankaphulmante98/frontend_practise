@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <form id="form">
+
+        <input type="text" id="name" placeholder="username">
+        <input type="text" id="email" placeholder="email">
+        <input type="text" placeholder="password" id="password">
+        <button id="btn" type="submit">SUBMIT</button>
+    </form>
+
+
+</body>
+</html>
+<script>
+    let form = document.getElementById("form")
+    form.addEventListener("submit", signupfunction)
+
+
+    let signupdata=JSON.parse(localStorage, getItem('data')) || [];
+;
+function signupfunction(){
+
+    let obj ={
+        name:form.name.value,
+        email:form.email.value,
+        password:form.password.value
+
+    }
+
+    const {name, email, password} = obj
+
+if(name=="" || email=="" ||password==""){
+alert("filler input Details");
+    }
+    else{
+        alert("signup sucessfully");
+        signupData.push(obj)
+
+        localStorage.setItem("data", JSON.stringify(signupdata));
+
+        window.location.href=".useLoginhtm"
+        windpw.lovcation.href="./Loginfunction"
+    
+
+
+    }
+}
+</script>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./index.css">
+    <title>Document</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="container">
+        <!-- date: "2020-01-02T00:00:02.000Z"
+        id
+        products
+        {productId: 2, quantity: 4}
+        userId
+        -->
+    </div>
+</body>
+</html>
+<script>
+async function getCartData(){
+    let res = await fetch(`https://fakestoreapi.com/carts`);
+    let data = await res.json();
+    console.log(data);
+    displayData(data);
+    return data;
+}
+getCartData();
+ let container = document.getElementById("container");
+
+
+ function displayData(data){
+console.log(data)
+ data.forEach((e) => {
+        
+let div = document.createElement("div");
+
+let img =document.createElement("img");
+img.setAttribute("src", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9WKOUMuW2EQzzKtx0GTad9xRCD5WXekLxMg&usqp=CAU")
+img.setAttribute("id", "img");
+
+let date = document.createElement("p");
+let dt= e.date.split("T");
+date.innerText=dt[0];
+
+let id = document.createElement("p");
+id.innerText=e.id;
+
+let userId = document.createElement("p");
+userId.innerText=e.userId;
+
+let prosId = document.createElement("div");
+// prosId.innerText=e.products[0].productId;
+for(let p=0; p<e.products.length; p++){
+    let ptag = document.createElement("p");
+    ptag.innerText= `productId:`+ " "+ e.products[p].productId
+    prosId.appendChild(ptag);
+    console.log(e.products[p].productId)
+}
+
+
+let proquantity = document.createElement("div");
+for( let p=0; p<e.products.length; p++){
+    let qty = document.createElement("p");
+    qty.innerText = `quantity:`+" "+e.products[p].quantity;
+    proquantity.append(qty);
+}
+
+// proquantity.innerText=e.products[0].quantity
+
+div.append(img, date, id, userId, prosId, proquantity)
+
+container.append(div);
+
+
+});
+
+
+
+ }
+
+
+</script>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>carts page</h1>
+    <div id="carts"></div>
+</body>
+<script>
+
+
+function  getcarts(){
+    fetch("https://dummy-gw38.onrender.com/products").then(res=>res.json()).then(res=>displayData(res))
+}
+getcarts()
+   
+ function displayData(data){
+
+data.forEach((e)=> {
+
+    let div = document.createElement("div");
+
+    let name = document.createElement("h3");
+    name.textContent=e.name;
+
+    let description= document.createElement("p");
+    description.textContent=e.description;
+
+    let price= document.createElement("p");
+    price.textContent=e.price;
+
+    let image= document.createElement("img");
+    image.setAttribute("src" ,e.image);
+
+    // let btn1= document.createElement("button");
+    // btn1.addEventListener("click", )
+
+    let delbtn= document.createElement("button");
+    delbtn.addEventListener("click", ()=>{
+        deletethis(e.id)
+    })
+    delbtn.innerText="DELETE";
+
+    div.append(image, name, price, description, delbtn)
+    document.getElementById("carts").append(div)
+
+});
+
+
+
+}
+
+function deletethis(id){
+    fetch(`https://dummy-gw38.onrender.com/products/${id}`,{
+        method:"DELETE"
+    }).then(res=>{
+        getcarts()
+        alert("product deleted")
+        
+    }).catch(er=>alert("not able to delete"))
+}
+
+</script>
+</html>

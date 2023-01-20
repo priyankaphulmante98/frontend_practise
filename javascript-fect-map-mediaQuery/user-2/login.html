@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./index.css">
+    <title>Login</title>
+</head>
+<body>
+    <navbar id="navbar">
+        <a href="index.html">Home</a>
+        <a href="./login.html">login</a>
+        <a href="./data.html">data</a>
+          </navbar>
+      
+          <form id="form">
+          <input type="text" placeholder="email" id="email">
+          <input type="password"placeholder="password" id="password">
+          <button type="submit">submit</button>
+          
+      </form>
+</body>
+</html>
+<script>
+        
+    let signupData = JSON.parse(localStorage.getItem("signupData")) || [];
+
+    let form = document.getElementById("form");
+    form.addEventListener("submit", loginfunction);
+
+    console.log(signupData);
+
+    function loginfunction(e){
+        e.preventDefault();
+        let obj ={
+            email:form.email.value,
+            password:form.password.value
+        }
+       
+        // let user = signupData.find(e => e.email==obj.email && e.password == obj.password)
+        // // console.log(user)    
+
+        for(let p=0; p<signupData.length; p++){
+            if(signupData[p].email==obj.email && signupData[p].password==obj.password){
+                alert("LOGIN is sucessfully")
+            window.location.href="data.html";
+            return ;
+            }
+            
+        }
+        alert("wrong credientials");
+
+    //     if(user){
+    //         alert("LOGIN is sucessfully")
+    //         window.location.href="data.html";
+    //     }else{
+    //         alert("wrong credientials");
+    //    }
+    }
+
+</script>

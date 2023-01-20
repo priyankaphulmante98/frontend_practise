@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <navbar>
+        <div><a href="./admin.html">LOGIN</a></div>
+        <div><a href="./dashboard.html">Dashboard</a></div>
+    </navbar>
+
+    <h1>ADMIN LOGIN FORM</h1>
+
+    <form id="form">
+        <input type="text" placeholder="admin@gmail.com" id="email"><br>
+        <input type="text" placeholder="admin" id="password"><br>
+        <button id="submit" type="submit">SUBMIT</button>
+    </form>
+
+</body>
+</html>
+<script>
+ 
+ let form = document.getElementById("form");
+ form.addEventListener("Submit", loginfunction)
+
+
+function loginfunction(e){
+    e.preventDefault()
+    
+    let obj={
+        email:form.email.value,
+        password:password.form.value
+    }
+
+    if(obj.email=="admin@gmail.com" && obj.password=="admin"){
+        alert("login is sucessfully");
+        window.location.href="dashboard.html"
+    }else{
+        aslert("wrong credinals");
+    }
+}
+</script>

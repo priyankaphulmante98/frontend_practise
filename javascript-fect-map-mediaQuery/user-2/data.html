@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./index.css">
+    <title>user page</title>
+</head>
+<body>
+
+    <navbar id="navbar">
+        <a href="index.html">Home</a>
+        <a href="./login.html">login</a>
+        <a href="./data.html">data</a>
+    </navbar>
+
+    <select id="gender">
+        <option value="">GENDER</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+    </select>
+
+    <select id="sort">
+        <option value="">PRICE</option>
+        <option value="asc">Asending</option>
+        <option value="desc">Desending</option>
+    </select>
+
+    <select id="filter" >
+        <option value="">COMPANY</option>
+        <option value="tcs">tcs</option>
+        <option value="wipro">wipro</option>
+        <option value="infoysis">infoysis</option>
+        <option value="congnizant">congnizant</option>
+    </select>
+
+    <div id="pages">
+        
+    </div>
+
+    <div>
+        <label for="browser">search by employname&nbsp; :</label>
+        <input id="search" type="text" placeholder="search by name" />
+        <button id="searchbtn">search</button>
+       
+    
+      </div>
+
+    <div id="container">
+        <!-- email:"priyankaphulmante98@gmail.com"
+        img:"https://shridhar1998.github.io/images//shri.jpeg"
+        name:"priyanka phulmante"
+        password:"ppp"
+        gender:form.gender.value,
+        price:form.price.value,
+        company:form.company.value,
+    -->
+</div>
+
+<div id="modal_form">
+    <form id="modal">
+        <input type="url"  placeholder="image" id="img">
+
+    <input type="text"  placeholder="name" id="name">
+
+    <input type="text" placeholder="email" id="email">
+
+    
+    <select name="gender" id="gender">
+        <option value="">GENDER</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+    </select>
+
+
+    <input type="number" placeholder="price" id="price" >
+
+    <select name="company" id="company">
+        <option value="">COMPANY</option>
+        <option value="tcs">tcs</option>
+        <option value="wipro">wipro</option>
+        <option value="infoysis">infoysis</option>
+        <option value="congnizant">congnizant</option>
+    </select>
+
+    <input type="password"placeholder="password" id="password">
+        <button type="submit" id="close">submit</button>
+    </form>
+   
+</div>
+
+</body>
+</html>
+<script>
+     let signupData = JSON.parse(localStorage.getItem("signupData")) || [];   
+
+
+     let filter = document.getElementById("filter");
+     filter.addEventListener("change",filterByCompany)
+
+     let genderfilter = document.getElementById("gender")
+     genderfilter.addEventListener("change",filterByGender)
+
+     let sorting = document.getElementById("sort")
+     sorting.addEventListener("change", sortingByPrice);
+
+    // let filterdebounce= document.getElementById("debounce")
+    // filterdebounce.addEventListener("click",filterByDebouncing);
+
+     let container = document.getElementById("container");   
+
+    console.log(signupData);  
+    displayData(signupData);  
+
+    function displayData(data){   
+
+        container.innerHTML = null;
+
+        data.forEach((e, index) => {    
+
+            let div = document.createElement("div");
+
+            let img = document.createElement("img");
+            img.setAttribute("src", e.img);
+
+            let name = document.createElement("h3");
+            name.innerText=e.name;
+
+            let password = document.createElement("p");
+            password.innerText=e.password;
+
+            let gender = document.createElement("p");
+            gender.innerText=e.gender;
+
+            let price = document.createElement("p");
+            price.innerText=e.price;
+
+            let company = document.createElement("p");
+            company.innerText=e.company;
+
+            let email = document.createElement("P");
+            email.innerText=e.email;
+
+            let del=document.createElement("button");
+            del.innerHTML="DELETE";
+            del.addEventListener("click", function(){
+                delfunction(e,index);                   
+            });
+            
+            let edit=document.createElement("button");
+            edit.innerHTML="UPDATE";
+            edit.addEventListener("click", function(){
+            let modall =  document.getElementById("modal")
+            modall.style.display= "block"
+            });
+
+            let closeBtn = document.getElementById("close")
+           closeBtn.addEventListener("click", function(){
+           let modall=  document.getElementById("modal")
+           modall.style.display= "none"  
+    })
+
+            div.append(img, name, password, gender, price, company ,email, del, edit);  
+            container.append(div);
+            
+        })
+
+        //.................delete and updata buttons functionallity............................//
+
+        function delfunction(e,index){
+           signupData.splice(index, 1); 
+           localStorage.setItem("signupData",JSON.stringify(signupData)); 
+           window.location.reload();   
+
+        }
+
+        function editFunction(e, index){  
+            let modal = document.getElementById("modal")
+            modal.addEventListener("submit",editForm);
+
+            function editForm(e,index) {
+            event.preventDefault();
+            let obj = {
+                img:form.img.value,
+                name:form.name.value,
+                email:form.email.value,
+                gender:form.gender.value,
+                price:form.price.value,
+                company:form.company.value,
+                password:form.password.value,
+            };
+            console.log(obj, "obj");
+            displayData(obj);
+            }
+    }
+}
+
+//...........................filter and sorting..............................................//
+
+ function filterByCompany(){
+    // console.log(filter.value)
+    let filterData = signupData.filter((e) => e.company ===filter.value)
+    displayData(filterData)
+ }
+
+ function filterByGender(){
+    // console.log(gender.value)
+    let filtergenderData = signupData.filter((e) => e.gender===genderfilter.value)
+    displayData(filtergenderData);
+ }
+
+function sortingByPrice(){
+    // console.log(sorting.value)
+    console.log(sorting.value, "sorting")
+    if(sorting.value=="asc"){
+            let sort =  signupData.sort((a,b) => a.price -b.price )
+            displayData(sort);
+        }else{
+            let sortdesc = signupData.sort((a,b) => b.price-a.price)
+            displayData(sortdesc)
+        }
+ }
+
+//  function filterByDebouncing(){
+
+//  }
+
+
+
+</script>
+
